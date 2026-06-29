@@ -2,9 +2,9 @@
 
 import EventCard from "@/components/EventCard";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
-export default function EventsPage() {
+function EventsContent() {
   const searchParams = useSearchParams();
   const artistFilter = searchParams.get("artist");
   const tagFilter = searchParams.get("tag");
@@ -60,5 +60,13 @@ export default function EventsPage() {
         ))}
       </div>
     </div>
+  );
+}
+
+export default function EventsPage() {
+  return (
+    <Suspense fallback={<div className="p-6 text-center text-xl">Loading...</div>}>
+      <EventsContent />
+    </Suspense>
   );
 }
